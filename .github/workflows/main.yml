@@ -22,7 +22,9 @@ jobs:
         run: composer install --no-progress --prefer-dist
 
       - name: Install Snyk CLI
-        run: npm install -g snyk
+        run: |
+          curl -sL https://github.com/snyk/snyk/releases/download/v1.105.0/snyk-linux-x86_64 -o /usr/local/bin/snyk
+          chmod +x /usr/local/bin/snyk
 
       - name: Run Snyk Test and save report to JSON
         run: snyk test --json > snyk-report.json
