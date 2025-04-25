@@ -21,6 +21,9 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Run Snyk Test and save report to JSON
         run: snyk test --json > snyk-report.json
 
