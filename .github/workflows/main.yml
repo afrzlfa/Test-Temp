@@ -26,4 +26,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: monitor --org=afrzlfa --remote-repo-url=https://github.com/${{ github.repository }}
+          args: monitor --org=afrzlfa --remote-repo-url=https://github.com/afrzlfa/Test-Temp
