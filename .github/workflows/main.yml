@@ -1,4 +1,4 @@
-name: Snyk PHP
+name: Snyk Security Scan
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  security:
+  snyk:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,9 +21,15 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist
 
-      - name: Run Snyk Monitor to upload scan results
-        uses: snyk/actions/php@master
+      - name: Run Snyk Test and save report to JSON
+        run: snyk test --json > snyk-report.json
+
+      - name: Commit and push Snyk report to repository
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add snyk-report.json
+          git commit -m "Add snyk report"
+          git push
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: monitor --org=afrzlfa --remote-repo-url=https://github.com/afrzlfa/Test-Temp
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
